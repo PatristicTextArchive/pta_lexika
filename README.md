@@ -8,4 +8,5 @@
 * `wordlemma.json`: 
     - besteht aus Word (wie im Text) - Lemma - Morphology
     - Wortformen, die nicht analysiert wurden, fehlen ganz. 
+    - Unterschiedlich zu analysierende Wortformen werden durch "|" voneinander getrennt; "/" markiert mehrere grammatikalische Bedeutungen einer Form
 
