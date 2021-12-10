@@ -1,12 +1,18 @@
-# Lexika und Lemmatisierungen
+# Word-Lemma-Lists and Lexica used by PTA
 
-## Griechisch
+The folder `sources` contains the source files of the used lexica; for more information see the `README.md` in this folder.
+
+The repository has the following files at the moment:
+
 * `pta_lexicon_grc.json`: 
-    - besteht aus lemma – grc_eng – grc_deu 
+    - compiled from LSJ, TBESG, and Pape
+    - has: lemma – grc_eng – grc_eng2 – grc_deu
+    - grc_eng = LSJ, grc_eng2 = TBESG, grc_deu = Pape 
     - grc_eng und grc_deu sind jeweils Listen, weil es homonyme Lemmata gibt. 
-    - Falls Lemma in keinem der Lexika zu finden ist, ist momentan der Eintrag leer; hier muss ich dann aus anderen Lexika die Bedeutungen noch manuell nachtragen.
+    - If there is no entry in one of the dictionaries, the entry is empty.
 * `wordlemma_grc.json`: 
-    - besteht aus Word (wie im Text) - Lemma - Morphology
-    - Wortformen, die nicht analysiert wurden, fehlen ganz. 
-    - Unterschiedlich zu analysierende Wortformen werden durch "|" voneinander getrennt; "/" markiert mehrere grammatikalische Bedeutungen einer Form
-
+    - result of lemmatizing the texts in in [pta_data](https://github.com/PatristicTextArchive/pta_data)
+    - has word – lemma – morphology
+    - words which have not been lemmatized (for whatever reason), are not in the file. 
+* JSON-versions of the lexica in the source-folder, adapted for use in PTA
+* The folder `scripts` contains a Jupyter notebook used to generate all files.
