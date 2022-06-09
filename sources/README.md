@@ -14,7 +14,7 @@ Source (Pape-4.6a.txt): http://outils.biblissima.fr/resources/eulexis/data.tar.g
 
 Modification: corrected html-tags (`<br>`  -> `<br/>`, added missing end-tags), renamed to Pape-4.6b.txt
 
-## TBESG - Translators Brief lexicon of Extended Strongs for Greek - STEPBible.org CC BY.txt
+## TBESG.txt
 
 Tab-separated file, one dictionary entry per line
 
