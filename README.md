@@ -15,14 +15,17 @@ The repository has the following files at the moment:
     - grc_eng and grc_deu are lists, as there are homonymous lemmata. 
     - If there is no entry in one of the dictionaries, the entry is empty.
 * The folder `pta_lexicon_grc` contains xml-version of the above
-* `wordlemma_grc.json`: 
-    - result of lemmatizing the texts in in [pta_data](https://github.com/PatristicTextArchive/pta_data). Lemmatization was done using the [Morpheus morphological analysis engine used at morph.perseids.org](morph.perseids.org); future releases will use the [Classical Language Toolkit (CLTK)](http://cltk.org/) for lemmatization.
+* `wordlemma_grc_cltk.json`:
+    - result of lemmatizing all texts in in [pta_data](https://github.com/PatristicTextArchive/pta_data); it currently has 132.814 entries. Lemmatization was done using the [Classical Language Toolkit (CLTK)](http://cltk.org/).
+    - has word - lemma - [POS](https://universaldependencies.org/u/pos/index.html) - [morphology](https://universaldependencies.org/u/feat/index.html) (according to  [Universal Dependencies (UD) project](https://universaldependencies.org))
+* `wordlemma_grc.json` (outdated): 
+    - result of lemmatizing part of the texts in in [pta_data](https://github.com/PatristicTextArchive/pta_data); it has 42346 entries. Lemmatization was done using the [Morpheus morphological analysis engine used at morph.perseids.org](morph.perseids.org).
     - has word – lemma – morphology
     - words which have not been lemmatized (for whatever reason), are not in the file. 
-* `wordlemma_grc.xml`:
-    - xml-version of the above
+* `wordlemma_grc.xml` (outdated):
+    - xml-version of the file above
 * `wordlemma_grc_diogenes.json`:
-    - morphology data from [Diogenes](https://d.iogen.es/d/), Greek converted to utf-8 (from Betacode)
+    - morphology data from [Diogenes](https://d.iogen.es/d/); Greek is converted to utf-8 (from Betacode).
     - has word - lemma (list of possible morphology)
 * JSON-versions of the lexica in the `source`-folder, adapted for use in PTA, the folder `pta_dictionaries` contains xml-versions of these.
 
