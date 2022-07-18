@@ -125,15 +125,23 @@ def remove_latin(inputText):
     return re.sub(r'[a-zA-Z]+',r'', inputText)
 
 # %%
+def clean(text):
+    """Remove superfluous spaces and linebreaks from extracted text"""
+    cleaned = re.sub("\n","",text)
+    cleaned = re.sub("  "," ",cleaned)
+    cleaned = re.sub("\s([.,·]+)","\\1",cleaned)
+    return cleaned
+
+# %%
 def tei_xml_to_plaintext(file_path):
-    plaintext = ''
+    converted = []
     with open(file_path) as file_open:
         text = CapitainsCtsText(resource=file_open)
         for ref in text.getReffs(level=len(text.citation)):
             psg = text.getTextualNode(subreference=ref, simple=True)
-            psg.plaintext_string_join = "" 
-            text_line = psg.export(Mimetypes.PLAINTEXT, exclude=["tei:note","tei:rdg"])
-            plaintext += text_line
+            textpart = psg.export(Mimetypes.PLAINTEXT, exclude=["tei:note","tei:rdg","tei:witDetail"])
+            converted.append(clean(textpart))
+    plaintext = " ".join(converted)
     return plaintext
 
 # %%
@@ -152,7 +160,7 @@ def analyze_grc_files(files_path):
     wordlemma_grc = []
     grc_pipeline_custom_1 = Pipeline(language="grc", description="", processes=[GreekTokenizationProcess, NormalisationProcess, GreekStanzaProcess, StopsProcess])
     cltk_nlp_grc = NLP(language="grc", custom_pipeline=grc_pipeline_custom_1, suppress_banner=True)
-    print("Analysing...")
+    print("Analysing grc...")
     for xml_path in grc_paths:
         file_dict = {}
         short_path = "/".join(xml_path.split("/")[8:])
@@ -202,7 +210,7 @@ def analyze_lat_files(files_path):
     wordlemma_lat = []
     cltk_nlp_lat = NLP(language="lat", suppress_banner=True)
     cltk_nlp_lat.pipeline.processes.pop(-1)
-    print("Analysing...")
+    print("Analysing lat...")
     for xml_path in lat_paths:
         file_dict = {}
         short_path = "/".join(xml_path.split("/")[8:])
@@ -210,8 +218,7 @@ def analyze_lat_files(files_path):
         ptaid = "".join(short_path).split(".xml")[0]
         text = tei_xml_to_plaintext(xml_path)
         text_lowered = text.lower() # Remove capitals
-        text_ana = lat.drop_latin_punctuation(text_lowered)
-        text_ana = lat.disappear_round_brackets(text_ana)
+        text_ana = lat.drop_latin_punctuation(text_lowered) # remove punctuation
         file_dict["urn"] = "urn:cts:pta:"+ptaid
         nlp = cltk_nlp_lat.analyze(text=text_ana)
         words = nlp.words
@@ -238,10 +245,10 @@ def analyze_lat_files(files_path):
     return pta_lat_dict, wordlemma_lat 
 
 # %%
-pta_grc_dict, wordlemma_grc = analyze_grc_files("/home/stockhausen/Downloads/pta_data/data/*/*/*.xml")
+pta_lat_dict, wordlemma_lat = analyze_lat_files("/home/stockhausen/Downloads/pta_data/data/*/*/*.xml")
 
 # %%
-pta_lat_dict, wordlemma_lat = analyze_lat_files("/home/stockhausen/Downloads/pta_data/data/*/*/*.xml")
+pta_grc_dict, wordlemma_grc = analyze_grc_files("/home/stockhausen/Downloads/pta_data/data/*/*/*.xml")
 
 # %%
 # Combine pta_grc_dict and pta_lat_dict 
@@ -258,21 +265,21 @@ with open('/home/stockhausen/Dokumente/projekte/pta_metadata/pta_statistics.json
     json.dump(pta_dict, fout, indent=4, ensure_ascii=False)
 
 # %%
-df = pd.DataFrame(wordlemma_grc)
-df.drop_duplicates(inplace=True)
+grc = pd.DataFrame(wordlemma_grc)
+grc.drop_duplicates(inplace=True)
 #df.columns = ["Word","Lemma","POS","Morphology"]
 #df.drop(['POS'], axis=1, inplace=True) # for the time being to be in concordance to prior format
 #df
 # Export dataframe to json
-df.to_json(r'/home/stockhausen/Dokumente/projekte/pta_lexika/wordlemma_grc_cltk.json', orient='records', force_ascii=False, indent=4)
+grc.to_json(r'/home/stockhausen/Dokumente/projekte/pta_lexika/wordlemma_grc_cltk.json', orient='records', force_ascii=False, indent=4)
 
 # %%
-df = pd.DataFrame(wordlemma_lat)
-df.drop_duplicates(inplace=True)
+lat = pd.DataFrame(wordlemma_lat)
+lat.drop_duplicates(inplace=True)
 #df.columns = ["Word","Lemma","POS","Morphology"]
 #df.drop(['POS'], axis=1, inplace=True) # for the time being to be in concordance to prior format
 #df
 # Export dataframe to json
-df.to_json(r'/home/stockhausen/Dokumente/projekte/pta_lexika/wordlemma_lat_cltk.json', orient='records', force_ascii=False, indent=4)
+lat.to_json(r'/home/stockhausen/Dokumente/projekte/pta_lexika/wordlemma_lat_cltk.json', orient='records', force_ascii=False, indent=4)
 
 
