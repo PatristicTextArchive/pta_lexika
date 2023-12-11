@@ -33,7 +33,7 @@ The repository has the following files at the moment:
 
 ## Latin
 
-* `Georges.json`: tbd
+* `Georges.json`: compiled from respective source file in `sources`.
 
 * `LewisShort.json`: tbd
 
