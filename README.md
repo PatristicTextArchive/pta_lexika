@@ -8,7 +8,7 @@ The folder `scripts` contains the Python scripts used to generate all files.
 
 The repository has the following files at the moment:
 
-* `Bailly2020.3a.json`, `LSJ.json`, `Pape.json`, `TBESG.json`
+* `Bailly2020.4a.json`, `LSJ.json`, `Pape.json`, `TBESG.json`
     Greek dictionaries compiled from respective source files in `sources`.
 * `pta_lexicon_grc.json`: 
     - compiled from LSJ, TBESG, and Pape
@@ -33,7 +33,7 @@ The repository has the following files at the moment:
 
 ## Latin
 
-* `Georges.json`: compiled from respective source file in `sources`.
+* `georges_lat.json`: compiled from respective source file in `sources`.
 
 * `LewisShort.json`: tbd
 
